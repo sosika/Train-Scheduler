@@ -1,28 +1,5 @@
 
 //-------------------------------------------------------------
-//  Next train calculation  
-//-------------------------------------------------------------
-// 
-// nextTrain(traintime,now)
-
-// function nextTrain(beginTime,currentTime) {
-//   var a = getHours(beginTime);
-//   var b = getHours(currentTime);
-//   console.log(a, b);
-
-  // if ( a > b ) {
-  //   // Calculate nextTrain time
-  //   // Calculate mins till
-  //   // return nextTrain time
-  //   // return mins till value
-  // } else {
-  //   // c = a + duration
-  //   // b = getHours(c)
-  
-// }
-
-
-//-------------------------------------------------------------
 //  Firebase setup and init
 //-------------------------------------------------------------
 var config = {
@@ -68,35 +45,29 @@ var config = {
 //  Calculate next train and minute till
 //-------------------------------------------------------------
 
-    // Net arrival time
+    // Frequency
     var tFrequency = snapshot.val().freqInput;
 
-    // Time is 3:30 AM
+    // First train of a day
     var firstTime = snapshot.val().timeInput;
 
-    // First Time (pushed back 1 year to make sure it comes before current time)
+    // First Time 
     var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
-    console.log(firstTimeConverted);
 
     // Current Time
     var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
     // Difference between the times
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
 
     // Time apart (remainder)
     var tRemainder = diffTime % tFrequency;
-    console.log(tRemainder);
 
     // Minute Until Train
     var tMinutesTillTrain = tFrequency - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
     // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
     var nextTrainFormatted = moment(nextTrain).format("hh:mm");
 
